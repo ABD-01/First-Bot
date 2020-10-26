@@ -64,10 +64,8 @@ def printboard(gboard):
     boardstr = '--------'*len(board)+'\n'
     # print('--------'*len(board))
     for row in board:
-        # s = ' | '.join(['`%4s`' %str(cell) for cell in row])
-        # boardstr = boardstr + f"| {s} |\n"
-        s = ' '.join(['`%4s`' %str(cell) for cell in row])
-        boardstr = boardstr + f" {s} \n"
+        s = ' | '.join(['`%4s`' %str(cell) for cell in row])
+        boardstr = boardstr + f"| {s} |\n"
         # print('|', '\t| '.join([str(cell) for cell in row]) ,end='\t|\n')
         boardstr = boardstr + '--------'*len(board)+'\n'
         # print('--------'*len(board))

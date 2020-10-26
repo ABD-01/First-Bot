@@ -149,9 +149,18 @@ class CustomClient(discord.Client):
         elif message.content.startswith('$2048'):
             channel = message.channel
             author = message.author
+            m = message.content.split('$2048')
+            win_cond = 2048
+            if len(m) > 1 and '-w' in message.content:
+                try:
+                    win_cond = int(m[1].split('-w')[1])
+                except ValueError:
+                    await channel.send(f"{m[1].split('-w')[1]} is not an integer", delete_afer=5)
 
-            win_cond, game_board = start_game(board_size=4)
-            embed = discord.Embed(title='2048', description="Use the letters `w`,`a`,`s`,`d` to Play.", footer=f'{author.name}')
+            win_cond, game_board = start_game(win_cond=win_cond, board_size=4)
+            desc = f"Use the letters `w`,`a`,`s`,`d` to Play.\n Use `q` or `Quit` to stop the game\nYour `win_conditon` is `{win_cond}`"
+            embed = discord.Embed(title='2048', description=desc)
+            embed.set_footer(text=f'{author.name}', icon_url=author.avatar_url)
 
             strboard = printboard(game_board)
             embed.add_field(name='Board', value=strboard)
@@ -198,14 +207,10 @@ class CustomClient(discord.Client):
                                 break
 
                     # If user wants to quit b/w gthe game
-                    # elif ch == 'q':
-                    #     print("Do you want to Exit the game ?")
-                    #     if input() in ['y', 'yes']:
-                    #         exit(1)
-                    #     else:
-                    #         system('clear')
-                    #         printboard(game_board)
-                    #         continue
+                    elif ch.lower() in ['q', 'quit']:
+                        await channel.send(f'<@{author.id}> , Oh no! You Gave Up, SED!')
+                        break
+
                     # In anyother case Re-propmt
                     else:
                         print("Invalid Key = ", ch)
