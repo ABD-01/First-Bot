@@ -63,21 +63,19 @@ class CustomClient(discord.Client):
 
         elif message.content.startswith('$sibam'):
             channel = message.channel
-            await channel.send('<:sibam:760903346051350537>')
+            await channel.send('<:sibam:770188260600447016>')
+            await message.delete()
 
         elif message.content.startswith('$emojis'):
-            # for guild in self.guilds:
-            #     if guild.name == GUILD:
-            #         break
             guild = message.guild
             channel = message.channel
             eembed = discord.Embed(title='Server Emojis', description=f"Following are the emojis of {guild.name}", footer='Page 1/3')
             eembed2 = discord.Embed(title='Server Emojis', description=f"Following are the emojis of {guild.name}", footer='Page 2/3')
             eembed3 = discord.Embed(title='Server Emojis', description=f"Following are the emojis of {guild.name}", footer='Page 3/3')
             # msg = "".join(f'<:{emoji.name}:{emoji.id}> {emoji.name} id={emoji.id} \n' for emoji in guild.emojis)
-            msg = "".join(f'<:{emoji.name}:{emoji.id}> {emoji.name}\n' for emoji in guild.emojis[:15])
-            msg2 = "".join(f'<:{emoji.name}:{emoji.id}> {emoji.name}\n' for emoji in guild.emojis[15:31])
-            msg3 = "".join(f'<:{emoji.name}:{emoji.id}> {emoji.name}\n' for emoji in guild.emojis[31:])
+            msg = "".join(f'<:{emoji.name}:{emoji.id}> {emoji.name}, {emoji.id}\n' for emoji in guild.emojis[:15])
+            msg2 = "".join(f'<:{emoji.name}:{emoji.id}> {emoji.name}, {emoji.id}\n' for emoji in guild.emojis[18:33])
+            msg3 = "".join(f'<:{emoji.name}:{emoji.id}> {emoji.name}, {emoji.id}\n' for emoji in guild.emojis[33:])
             eembed.add_field(name='Emojis', value=msg)
             eembed2.add_field(name='Emojis', value=msg2)
             eembed3.add_field(name='Emojis', value=msg3)
@@ -161,6 +159,7 @@ class CustomClient(discord.Client):
             desc = f"Use the letters `w`,`a`,`s`,`d` to Play.\n Use `q` or `Quit` to stop the game\nYour `win_conditon` is `{win_cond}`"
             embed = discord.Embed(title='2048', description=desc)
             embed.set_footer(text=f'{author.name}', icon_url=author.avatar_url)
+            embed.add_field(name='Usage', value='`$2048 -w <win_cond>`', inline=False)
 
             strboard = printboard(game_board)
             embed.add_field(name='Board', value=strboard)
@@ -201,7 +200,7 @@ class CustomClient(discord.Client):
                                 break
 
                             # checking for winning Criteria
-                            if any(win_cond in row for row in game_board) == True:
+                            if didWin(win_cond,game_board) == True:
                                 print('You Win')
                                 await channel.send(f'<@{author.id}> You Won')
                                 break

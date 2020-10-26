@@ -27,36 +27,36 @@ def start_game(win_cond=2048, board_size=5):
     return win_cond, game_board
 
 
-# Check for input Key
-def getKey(ch):
-    ch = getch().lower()
-    while True:
-
-        # checking if entered key is correct
-        if ch in ['a', 's', 'd', 'w']:
-            if isValid(ch, game_board) == False:
-                print("Invalid move = ", ch)
-                ch = getch().lower()
-                continue
-            else:
-                ##print("You pressed", ch)
-                return ch
-
-        # If user wants to quit b/w gthe game
-        elif ch == 'q':
-            print("Do you want to Exit the game ?")
-            if input() in ['y', 'yes']:
-                exit(1)
-            else:
-                system('clear')
-                printboard(game_board)
-                ch = getch().lower()
-
-        # In anyother case Re-propmt
-        else:
-            print("Invalid Key = ", ch)
-            ch = getch().lower()
-            continue
+# # Check for input Key
+# def getKey(ch):
+#     ch = getch().lower()
+#     while True:
+#
+#         # checking if entered key is correct
+#         if ch in ['a', 's', 'd', 'w']:
+#             if isValid(ch, game_board) == False:
+#                 print("Invalid move = ", ch)
+#                 ch = getch().lower()
+#                 continue
+#             else:
+#                 ##print("You pressed", ch)
+#                 return ch
+#
+#         # If user wants to quit b/w gthe game
+#         elif ch == 'q':
+#             print("Do you want to Exit the game ?")
+#             if input() in ['y', 'yes']:
+#                 exit(1)
+#             else:
+#                 system('clear')
+#                 printboard(game_board)
+#                 ch = getch().lower()
+#
+#         # In anyother case Re-propmt
+#         else:
+#             print("Invalid Key = ", ch)
+#             ch = getch().lower()
+#             continue
 
 
 # Most Important part of the program
@@ -102,6 +102,9 @@ def game_move(ch, gboard):
 
     return board
 
+
+def didWin(win_cond, game_board):
+    return any(win_cond in row for row in game_board)
 
 # Similar to main function
 # while True:
