@@ -58,12 +58,13 @@ class CustomClient(discord.Client):
             hembed = discord.Embed(title='Hi, This is First Bot')
             hembed.description = "I'm a bot made by ABD for learning purpose.\nMy prefix is `$`"
             hembed.set_thumbnail(url=self.user.avatar_url)
-            hembed.add_field(name='Commands', value='`greet`,`bruh`,`2048`,`sibam`,`emojis`,`icon`,`thumb`,`delete`')
+            hembed.add_field(name='Commands', value='`greet`,`bruh`,`2048`,`emojis`,`icon`,`thumb`,`delete`')
             await channel.send(embed=hembed)
 
         elif message.content.startswith('$sibam'):
             channel = message.channel
             await channel.send('<:sibam:770188260600447016>')
+            # await channel.send(f'Thanks for your appreciation, <@{707967110382485566}>')
             await message.delete()
 
         elif message.content.startswith('$emojis'):
@@ -87,9 +88,6 @@ class CustomClient(discord.Client):
             await channel.send(embed=eembed3)
 
         elif message.content.startswith('$icon'):
-            # for guild in self.guilds:
-            #     if guild.name == GUILD:
-            #         break
             guild = message.guild
             channel = message.channel
             await channel.send(guild.icon_url)
@@ -97,7 +95,7 @@ class CustomClient(discord.Client):
         elif message.content.startswith('$delete'):
             channel = message.channel
             msg = message.content.split('$delete')
-            if len(msg) < 2:
+            if message.content.strip() == '$delete':
                 await channel.send('Usage: `$delete <msg_id>,<msg_id>, ..`', delete_after=3)
             else:
                 ids = msg[1].split(',')
@@ -118,6 +116,9 @@ class CustomClient(discord.Client):
         elif message.content.startswith('$thumb'):
             channel = message.channel
             bm = await channel.send('Send me that 👍 reaction, <@{}>!'.format(message.author.id))
+
+            await bm.add_reaction('👍')
+            await bm.add_reaction('👎')
 
             def checkup(reaction, user):
                 return user == message.author and str(reaction.emoji) == '👍'
@@ -153,7 +154,7 @@ class CustomClient(discord.Client):
                 try:
                     win_cond = int(m[1].split('-w')[1])
                 except ValueError:
-                    await channel.send(f"{m[1].split('-w')[1]} is not an integer", delete_afer=5)
+                    await channel.send(f"{m[1].split('-w')[1]} is not an integer", delete_after=3)
 
             win_cond, game_board = start_game(win_cond=win_cond, board_size=4)
             desc = f"Use the letters `w`,`a`,`s`,`d` to Play.\n Use `q` or `Quit` to stop the game\nYour `win_conditon` is `{win_cond}`"
@@ -216,6 +217,36 @@ class CustomClient(discord.Client):
                         await channel.send(f'<@{author.id}> That\'s an invalid key', delete_after=2)
                         await msg.delete(delay=0.5)
                         continue
+
+        elif message.content.startswith('$user'):
+            channel = message.channel
+            author = message.author
+            print(author)
+            dmsg = await author.send('hello')
+            print(dmsg)
+            print(dmsg.channel)
+            print(dmsg.channel.type)
+            print(dmsg.channel == 'dm')
+
+        elif message.content.startswith('$send'):
+            channel = message.channel
+            author = message.author
+            print(author,channel)
+
+        elif message.content.startswith('$msg'):
+            channel = message.channel
+            msg = await channel.fetch_message('770068405814296597')
+            print(msg.author)
+            #dmsg = await msg.author.send('Hi Bro!!')
+            dmchannel = msg.author.dm_channel
+            messages = await dmchannel.history(limit=123).flatten()
+            print(messages)
+
+        elif message.content.startswith('$react'):
+            emojis = ['⬅️', '⬆️', '⬇️', '➡️']
+            for emoji in emojis:
+                await message.add_reaction(emoji)
+
 
 
 client = CustomClient()
