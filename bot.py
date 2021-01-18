@@ -130,31 +130,31 @@ class CustomClient(discord.Client):
             elif m[0] == '$2048':
                 await py2048.play_game(self, message, win_cond)
 
-'''
-        elif message.content.startswith('$msguser'):
-            userids = {'abd':701479951479865384, 'kira':761989402725187635 , 'luqman':707968621238026310 , 'sibam':393298417704501248}
-            hembed = discord.Embed(title='Hi, This is First Bot')
-            hembed.description = "I'm a bot made by ABD for learning purpose.\nMy prefix is `$`"
-            hembed.set_thumbnail(url=self.user.avatar_url)
-            hembed.add_field(name='Commands', value='`greet`,`bruh`,`2048`,`emojis`,`icon`,`thumb`,`delete`')
-            a = await self.fetch_user(userids['abd'])
-            print(a)
-            await message.author.send(a)
-            msg = await a.send(embed=hembed)
-            print(msg)
-            await a.send('Try `$2048` command now. It\'s usage is `$2048 -w win_cond`')
-            messages = await msg.channel.history(limit=123).flatten()
-            for me in messages:
-                print(me.author, me.content)
-                '''await message.author.send(content=(f'`{me.author}`', me.content))
-                if me.embeds:
-                    for e in me.embeds:
-                        print(me.author, e.to_dict())
-                        await message.author.send(content=f'`{me.author}`:', embed=e)'''
-                if me.author == self.user:
-                    await me.delete()
-'''
-                        
+
+        # elif message.content.startswith('$msguser'):
+        #     userids = {'abd':701479951479865384, 'kira':761989402725187635 , 'luqman':707968621238026310 , 'sibam':393298417704501248}
+        #     hembed = discord.Embed(title='Hi, This is First Bot')
+        #     hembed.description = "I'm a bot made by ABD for learning purpose.\nMy prefix is `$`"
+        #     hembed.set_thumbnail(url=self.user.avatar_url)
+        #     hembed.add_field(name='Commands', value='`greet`,`bruh`,`2048`,`emojis`,`icon`,`thumb`,`delete`')
+        #     a = await self.fetch_user(userids['abd'])
+        #     print(a)
+        #     await message.author.send(a)
+        #     msg = await a.send(embed=hembed)
+        #     print(msg)
+        #     await a.send('Try `$2048` command now. It\'s usage is `$2048 -w win_cond`')
+        #     messages = await msg.channel.history(limit=123).flatten()
+        #     for me in messages:
+        #         print(me.author, me.content)
+        #         '''await message.author.send(content=(f'`{me.author}`', me.content))
+        #         if me.embeds:
+        #             for e in me.embeds:
+        #                 print(me.author, e.to_dict())
+        #                 await message.author.send(content=f'`{me.author}`:', embed=e)'''
+        #         if me.author == self.user:
+        #             await me.delete()
+
+
         elif message.content.startswith('$permission'):
             author = message.author
             print(author.guild_permissions)
@@ -172,7 +172,7 @@ class CustomClient(discord.Client):
             print(p.manage_guild)
             print(p.manage_messages)
 
-            
+
 
 
 
