@@ -73,7 +73,7 @@ def printboard(gboard):
         s = ' | '.join(['%4s' % str(cell) for cell in row])
         boardstr = boardstr + f"| {s} |\n"
         boardstr = boardstr + '-' + '-------' * len(board) + '\n'
-    print(boardstr)
+    # print(boardstr)
     return '`' + boardstr + '`'
 
 
@@ -167,7 +167,7 @@ def didWin(win_cond, game_board):
 #         exit(0)
 
 
-async def play_2048_game(client,message,win_cond):
+async def play_game(client,message,win_cond):
     channel = message.channel
     author = message.author
 
@@ -182,7 +182,6 @@ async def play_2048_game(client,message,win_cond):
     color = int(color, 16)
     embed = Embed(title='2048', description=desc, color=color)
     embed.set_footer(text=f'{author.name}', icon_url=author.avatar_url)
-    # embed.add_field(name='Usage', value='`$2048 -w <win_cond>`', inline=False)
 
     strboard = printboard(game_board)
     embed.add_field(name='Board', value=strboard)
@@ -214,12 +213,10 @@ async def play_2048_game(client,message,win_cond):
 
     while True:
         try:
-            # msg = await self.wait_for('message',timeout=60, check=check)
             reaction, user = await client.wait_for('reaction_add', timeout=60, check=check)
             await bemsg.remove_reaction(reaction, user)
-            print('Received reaction', reaction, 'from', user)
+            # print('Received reaction', reaction, 'from', user)
         except asyncio.TimeoutError:
-            # await channel.send(f'<@{author.id}> did not respond in time, what a noob!')
             embed.add_field(name='Result', value=f'<@{author.id}>, did not respond in time, SED', inline=False)
             await bemsg.edit(embed=embed)
             await bemsg.clear_reactions()
@@ -230,27 +227,21 @@ async def play_2048_game(client,message,win_cond):
             # checking if entered key is correct
             if ch.lower() in ['a', 's', 'd', 'w']:
                 if isValid(ch, game_board) == False:
-                    print("Invalid move = ", ch)
-                    # await channel.send(f'<@{author.id}> That\'s an invalid move', delete_after=2)
+                    # print("Invalid move = ", ch)
                     embed.add_field(name='Invalid Move', value=f'{reaction.emoji} is Invalid Move', inline=False)
                     await bemsg.edit(embed=embed)
                     embed.remove_field(1)
                     continue
                 else:
-                    ##print("You pressed", ch)
                     game_board = game_move(ch, game_board)
                     game_board = insert_two(game_board)
                     strboard = printboard(game_board)
-                    # embed.clear_fields()
-                    # embed.add_field(name='Board', value=strboard)
                     embed.set_field_at(index=0, name='Board', value=strboard)
                     await bemsg.edit(embed=embed)
-                    # await msg.delete(delay=0.5)
 
                     # Checking the game progress
                     if didLose(game_board) == True:
-                        print('Game Over, You Lose')
-                        # await channel.send(f'<@{author.id}> You Lose')
+                        # print('Game Over, You Lose')
                         embed.add_field(name='Result', value=f'{author.name}, You Lost ☹️', inline=False)
                         await bemsg.edit(embed=embed)
                         await bemsg.clear_reactions()
@@ -258,8 +249,7 @@ async def play_2048_game(client,message,win_cond):
 
                     # checking for winning Criteria
                     if didWin(win_cond,game_board) == True:
-                        print('You Win')
-                        # await channel.send(f'<@{author.id}> You Won')
+                        # print('You Win')
                         embed.add_field(name='Result', value=f'{author.name}, You Won 🏆', inline=False)
                         await bemsg.edit(embed=embed)
                         await bemsg.clear_reactions()
@@ -267,7 +257,6 @@ async def play_2048_game(client,message,win_cond):
 
             # If user wants to quit b/w gthe game
             elif ch.lower() in ['q', 'quit']:
-                # await channel.send(f'<@{author.id}> , Oh no! You Gave Up, SED!')
                 embed.add_field(name='Result', value=f'{author.name}, You Gave Up 😞', inline=False)
                 await bemsg.edit(embed=embed)
                 await bemsg.clear_reactions()
