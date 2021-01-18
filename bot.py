@@ -9,7 +9,6 @@ GUILD="Second Years-IvLabs"
 # client = discord.Client()
 
 class CustomClient(discord.Client):
-# @client.event
     async def on_ready(self):
         for guild in self.guilds:
             if guild.name == GUILD:
