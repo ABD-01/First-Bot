@@ -77,6 +77,16 @@ class Cathy:
         os.chdir(pkg_resources.resource_filename(__name__, ''))  # Change directories to load AIML files properly
         startup_filename = pkg_resources.resource_filename(__name__, self.STARTUP_FILE)
         self.aiml_kernel.setBotPredicate("name", "Cathy")
+
+        # Added stuff
+        self.aiml_kernel.setBotPredicate("nationality", "Indian")
+        self.aiml_kernel.setBotPredicate("country", "India")
+        self.aiml_kernel.setBotPredicate("botmaster", "ABD")
+        self.aiml_kernel.setBotPredicate("birthday", "21st Jan")
+        self.aiml_kernel.setBotPredicate("language", "Python")
+        self.aiml_kernel.setBotPredicate("religion", "Serving Mankind")
+
+
         self.aiml_kernel.learn(startup_filename)
         self.aiml_kernel.respond("LOAD AIML B")
         os.chdir(initial_dir)
@@ -111,6 +121,9 @@ class Cathy:
 
             # Setting `Listening ` status
             await self.discord_bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="$help"))
+            # Changing nickname
+            for guild in self.discord_bot.guilds:
+                await guild.me.edit(nick="Cathy")
 
         @self.discord_bot.event
         async def on_message(message):
