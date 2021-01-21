@@ -6,7 +6,7 @@ def main():
 
     token = open('TOKEN').read()
 
-    bot = Cathy(channel_name="development", bot_token=token, database="./database.db")
+    bot = Cathy(channel_name="chat-aiml", bot_token=token, database="./database.db")
     bot.run()
 
 

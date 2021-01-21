@@ -26,10 +26,10 @@ async def firstbot(bot, message):
         hembed.description = "I'm a bot made by ABD for learning purpose.\nMy prefix is `$`"
         hembed.set_thumbnail(url=bot.user.avatar_url)
         hembed.add_field(name='Commands', value='`greet`,`2048`,`thumb`,`delete`')
-        chat_channel = discord.utils.get(message.guild.text_channels, name="development")
+        chat_channel = discord.utils.get(message.guild.text_channels, name="chat-aiml")
         if chat_channel is None:
-            hembed.add_field(name='AIML Chat', value='''Have a talk with we in `#development` channel.
-                                                        (You need to create `#development` channel if it doesn't exists.)''', inline=False)
+            hembed.add_field(name='AIML Chat', value='''Have a talk with we in `#chat-aiml` channel.
+                                                        (You need to create `#chat-aiml` channel if it doesn't exists.)''', inline=False)
         else:
             hembed.add_field(name='AIML Chat', value=f"Have a talk with we in {chat_channel.mention} channel.", inline=False)
         await channel.send(embed=hembed)
