@@ -3,7 +3,7 @@ import asyncio
 import py2048
 
 
-async def firstbot(message):
+async def firstbot(bot, message):
 
     if message.content.startswith('$greet'):
         channel = message.channel
@@ -12,23 +12,26 @@ async def firstbot(message):
         def check(m):
             return m.content.lower() == 'hello' and m.channel == channel
 
-        msg = await self.wait_for('message', check=check)
+        msg = await bot.wait_for('message', check=check)
         # '<@&%s>' % self.id
         await channel.send('Hello <@%s>!' % msg.author.id)
 
+
+    elif message.content.startswith('$help 2048'):
+        await message.channel.send('Usage: `$2048` or `$2048 win_condition`')
 
     elif message.content.startswith('$help'):
         channel = message.channel
         hembed = discord.Embed(title='Hi, This is First Bot')
         hembed.description = "I'm a bot made by ABD for learning purpose.\nMy prefix is `$`"
-        hembed.set_thumbnail(url=self.user.avatar_url)
+        hembed.set_thumbnail(url=bot.user.avatar_url)
         hembed.add_field(name='Commands', value='`greet`,`2048`,`thumb`,`delete`')
-        chat_channel = discord.utils.get(guild.text_channels, name="development")
+        chat_channel = discord.utils.get(message.guild.text_channels, name="development")
         if chat_channel is None:
             hembed.add_field(name='AIML Chat', value='''Have a talk with we in `#development` channel.
-                                                        (You need to create `#development` channel if it doesn't exists.)''')
+                                                        (You need to create `#development` channel if it doesn't exists.)''', inline=False)
         else:
-            hembed.add_field(name='AIML Chat', value=f"Have a talk with we in {chat_channel.mention} channel.")
+            hembed.add_field(name='AIML Chat', value=f"Have a talk with we in {chat_channel.mention} channel.", inline=False)
         await channel.send(embed=hembed)
 
 
@@ -51,12 +54,12 @@ async def firstbot(message):
                     delmesg = await channel.fetch_message(id.strip())
                     await delmesg.delete(delay=0.5)
                     await channel.send('I deleted the message', delete_after=1)
-                    print('Deleted', delmesg.content)
+                    # print('Deleted', delmesg.content)
                 except Exception as e:
                     await channel.send('Error: '+str(e), delete_after=2)
-                    print(e)
-                    print(id)
-        print(message)
+                    # print(e)
+                    # print(id)
+        # print(message)
         await message.delete(delay=0.5)
 
 
@@ -74,7 +77,7 @@ async def firstbot(message):
         while True:
             await bm.edit(content='Send me that 👎 reaction, <@{}>!'.format(message.author.id))
             try:
-                reaction, user = await self.wait_for('reaction_add', timeout=1, check=checkdown)
+                reaction, user = await bot.wait_for('reaction_add', timeout=1, check=checkdown)
                 await bm.remove_reaction(reaction, user)
                 print(bm.reactions)
             except asyncio.TimeoutError:
@@ -85,7 +88,7 @@ async def firstbot(message):
 
             await bm.edit(content='Send me that 👍 reaction, <@{}>!'.format(message.author.id))
             try:
-                reaction, user = await client.wait_for('reaction_add', timeout=1, check=checkup)
+                reaction, user = await bot.wait_for('reaction_add', timeout=1, check=checkup)
                 await bm.remove_reaction(reaction, user)
                 print(bm.reactions)
             except asyncio.TimeoutError:
@@ -114,9 +117,9 @@ async def firstbot(message):
                     await channel.send("Wow! That's a huge number. But for your information:"
                                        "\nThe maximum possible value on 4x4 board is `131072`")
                 else:
-                    await py2048.play_game(self, message, win_cond)
+                    await py2048.play_game(bot, message, win_cond)
             except ValueError:
                 await channel.send(f"`{m[1]}` is not an integer")
         elif m[0] == '$2048':
-            await py2048.play_game(self, message, win_cond)
+            await py2048.play_game(bot, message, win_cond)
 

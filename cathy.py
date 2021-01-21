@@ -1,4 +1,4 @@
-import aiml
+import _aiml as aiml
 from datetime import datetime, timedelta
 import discord
 import os
@@ -110,7 +110,7 @@ class Cathy:
             logging.info("[*] ID: {}".format(self.discord_bot.user.id))
 
             # Setting `Listening ` status
-            await self.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="$help"))
+            await self.discord_bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="$help"))
 
         @self.discord_bot.event
         async def on_message(message):
@@ -118,8 +118,8 @@ class Cathy:
 
             # Added funtionality
             if str(message.channel) != self.channel_name:
-                await firstbot(message)
-
+                await firstbot(self.discord_bot, message)
+                return
 
             if message.author.bot:
                 return
