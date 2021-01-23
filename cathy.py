@@ -134,7 +134,7 @@ class Cathy:
                 await firstbot(self.discord_bot, message)
                 return
 
-            if message.author.bot:
+            if message.author.name == self.discord_bot.user.name:
                 return
 
             if message.content is None:

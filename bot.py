@@ -4,7 +4,7 @@ from cathy import Cathy
 
 def main():
 
-    token = open('TOKEN').read()
+    token = "NzY5NTYwMzI1Mzg0OTYyMDc5.X5Qy5w.6mR4ztoTE5Cr0-LcZj2r-a4Qd5w"#open('TOKEN').read()
 
     bot = Cathy(channel_name="chat-aiml", bot_token=token, database="./database.db")
     bot.run()
