@@ -185,7 +185,8 @@ async def play_game(client,message,win_cond):
 
     strboard = printboard(game_board)
     embed.add_field(name='Board', value=strboard)
-    bemsg = await channel.send(embed=embed)
+    # bemsg = await channel.send(embed=embed)
+    bemsg = await message.reply(embed=embed)
 
     def check(reaction, user):
         # return m.author == message.author and m.channel == channel
