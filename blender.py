@@ -2,7 +2,8 @@ import pexpect
 
 class ChatHandler:
     def __init__(self):
-        self.child = pexpect.spawn('!python interactive.py -t blended_skill_talk -mf zoo:blender/blender_1Bdistill/model', timeout=None)
+        self.child = pexpect.spawn('python interactive.py -t blended_skill_talk -mf zoo:blender/blender_90M/model', timeout=None)
+        # zoo: https://parl.ai/docs/zoo.html
         self.child.expect('Enter Your Message:')
         self.personality = self.child.before.decode('utf-8', 'ignore').split('[context]')[1]
     def listen(self):
