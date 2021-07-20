@@ -2,7 +2,7 @@ import discord
 import asyncio
 import random
 import py2048
-import blender
+# import blender
 
 TOKEN="ODY1OTY1MTA5NjUzNzk4OTYz.YPLq2g.E9QuNi0DCfsGLjsGZedXxzw3CG4"
 GUILD="IvLabs - 2022-2024"
@@ -13,9 +13,9 @@ class CustomClient(discord.Client):
 # @client.event
     async def on_ready(self):
         await self.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="cathy help"))
-        self.server_chats = dict()
-        for server in self.guilds:
-            self.server_chats[server.name] = blender.ChatHandler()
+        # self.server_chats = dict()
+        # for server in self.guilds:
+        #     self.server_chats[server.name] = blender.ChatHandler()
         print('The Bot is Ready')
 
 
@@ -68,18 +68,18 @@ class CustomClient(discord.Client):
                 await py2048.play_game(self, message, win_cond)
 
 
-        elif message.content.lower() == 'cathy persona':
-            await message.reply(self.server_chats[message.guild.name].personality)
+        # elif message.content.lower() == 'cathy persona':
+        #     await message.reply(self.server_chats[message.guild.name].personality)
 
-        elif message.content.lower() == 'cathy forget':
-            self.server_chats[message.guild.name].say('[DONE]')
-            await message.reply('Chat history forgotten.')
+        # elif message.content.lower() == 'cathy forget':
+        #     self.server_chats[message.guild.name].say('[DONE]')
+        #     await message.reply('Chat history forgotten.')
 
-        elif message.content.lower().startswith('cathy '):
-            saying = message.content[6:]
-            self.server_chats[message.guild.name].say(saying)
-            response = self.server_chats[message.guild.name].listen()
-            await message.reply(response)
+        # elif message.content.lower().startswith('cathy '):
+        #     saying = message.content[6:]
+        #     self.server_chats[message.guild.name].say(saying)
+        #     response = self.server_chats[message.guild.name].listen()
+        #     await message.reply(response)
 
 
 
